@@ -1,0 +1,60 @@
+server:
+  port: 8083
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: pet-service
+  
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+  
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+  
+  # Disable GCS autoconfiguration
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.gcp.autoconfigure.storage.GcpStorageAutoConfiguration
+
+# Configuración para producción
+ai:
+  service:
+    url: ${AI_SERVICE_URL:http://localhost:8000}
+    enabled: ${AI_SERVICE_ENABLED:true}
+
+# Configuración GCS para producción
+gcs:
+  bucket-name: ${GCS_BUCKET_NAME}
+  enabled: ${GCS_ENABLED:true}
+  project-id: ${GOOGLE_CLOUD_PROJECT}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.petnow.pet: INFO
+    org.springframework: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n" 

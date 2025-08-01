@@ -1,0 +1,192 @@
+MANUAL DE USUARIO - X-NOSE
+============================
+
+¿Qué es X-NOSE?
+---------------
+X-NOSE es una aplicación móvil que utiliza reconocimiento biométrico de narices de perros para identificar mascotas perdidas y conectarlas con sus dueños.
+
+¿Cómo funciona?
+- Escaneas la nariz de un perro con tu cámara
+- IA analiza la huella nasal única
+- Compara con la base de datos de mascotas registradas
+- Conecta con el dueño si encuentra coincidencia
+
+PRIMEROS PASOS
+==============
+
+1. Registrarse
+--------------
+- Abre la aplicación X-NOSE
+- Toca "Registrarse" o "Crear cuenta"
+- Completa tus datos:
+  * Nombre completo
+  * Email
+  * Teléfono
+  * Contraseña
+
+2. Registrar tu Mascota
+-----------------------
+- Ve a "Mis Mascotas" → "Agregar Mascota"
+- Completa la información:
+  * Nombre de la mascota
+  * Raza y edad
+  * Color y características
+  * Tu información de contacto
+
+3. Escanear la Nariz
+--------------------
+- Importante: La nariz debe estar limpia y bien iluminada
+- Mantén la cámara estable
+- Asegúrate de que la nariz ocupe la mayor parte de la pantalla
+- Toca el botón de captura
+
+FUNCIONES PRINCIPALES
+====================
+
+Buscar Mascota Perdida
+----------------------
+1. Toca "Buscar Mascota"
+2. Escanea la nariz del perro encontrado
+3. La app te dirá si:
+   - ENCONTRADA: Muestra datos del dueño
+   - NO REGISTRADA: Te permite reportarla
+
+Registrar Nueva Mascota
+-----------------------
+1. Ve a "Mis Mascotas"
+2. Toca "Agregar Mascota"
+3. Completa la información
+4. Escanea la nariz (múltiples ángulos recomendados)
+5. Confirma el registro
+
+Reportar Mascota Perdida
+------------------------
+1. Ve a "Reportar Perdida"
+2. Selecciona tu mascota de la lista
+3. Agrega detalles:
+   - Ubicación donde se perdió
+   - Fecha y hora
+   - Descripción adicional
+4. Publica el reporte
+
+Ver Reportes Activos
+--------------------
+- Ve a "Reportes Activos"
+- Filtra por:
+  - Ubicación (cerca de ti)
+  - Fecha (recientes)
+  - Raza específica
+
+CONSEJOS PARA MEJOR RESULTADO
+============================
+
+Al Escanear Narices:
+--------------------
+BUENAS CONDICIONES:
+- Luz natural o buena iluminación
+- Nariz limpia y seca
+- Perro tranquilo y cooperativo
+- Cámara estable
+
+EVITAR:
+- Sombras en la nariz
+- Movimiento excesivo
+- Nariz mojada o sucia
+- Mala iluminación
+
+Uso de la App:
+--------------
+- Mantén actualizada la información de contacto
+- Usa fotos claras de tu mascota
+- Reporta inmediatamente si se pierde
+- Revisa regularmente los reportes activos
+
+CONFIGURACIÓN Y AJUSTES
+=======================
+
+Perfil de Usuario
+-----------------
+- Editar información personal
+- Cambiar contraseña
+- Configurar notificaciones
+
+Notificaciones
+--------------
+- Reportes nuevos en tu área
+- Coincidencias de mascotas
+- Mensajes de otros usuarios
+
+Privacidad
+----------
+- Información visible para otros usuarios
+- Ubicación compartida
+- Fotos de tus mascotas
+
+SITUACIONES DE EMERGENCIA
+=========================
+
+Mi Mascota se Perdió AHORA:
+---------------------------
+1. No entres en pánico
+2. Abre X-NOSE
+3. Ve a "Reportar Perdida"
+4. Completa el reporte inmediatamente
+5. Comparte el reporte en redes sociales
+6. Busca en el área donde se perdió
+
+Encontré un Perro Perdido:
+--------------------------
+1. Mantén al perro seguro
+2. Escanea su nariz con X-NOSE
+3. Si está registrado, contacta al dueño
+4. Si no está registrado, reporta el hallazgo
+5. No lo dejes solo hasta que llegue el dueño
+
+CONTACTO Y SOPORTE
+==================
+
+Problemas Técnicos:
+-------------------
+- App no funciona: Reinicia la aplicación
+- Escaneo falla: Verifica la iluminación
+- No encuentra conexión: Revisa tu internet
+
+Ayuda Adicional:
+----------------
+- Email: soporte@xnose-app.com
+- Teléfono: +1-800-XNOSE-HELP
+- Chat en vivo: Disponible en la app
+
+FUNCIONES AVANZADAS
+===================
+
+Historial de Búsquedas
+----------------------
+- Ve a "Historial"
+- Revisa tus búsquedas anteriores
+- Guarda mascotas favoritas
+
+Estadísticas
+------------
+- Mascotas registradas en tu área
+- Reportes exitosos
+- Tiempo promedio de recuperación
+
+Comunidad
+---------
+- Grupos locales de dueños de mascotas
+- Eventos de búsqueda organizados
+- Consejos de otros usuarios
+
+¡LISTO PARA USAR!
+=================
+
+X-NOSE es tu aliado digital para mantener seguras a tus mascotas. Con esta tecnología de reconocimiento biométrico, las posibilidades de recuperar una mascota perdida son mucho mayores.
+
+Recuerda:
+- Registra a todas tus mascotas
+- Mantén la app actualizada
+- Reporta inmediatamente si se pierden
+- Ayuda a otros dueños cuando puedas
+
+¡Juntos hacemos una comunidad más segura para nuestras mascotas! 

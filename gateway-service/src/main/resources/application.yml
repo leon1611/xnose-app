@@ -1,0 +1,64 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  
+  cloud:
+    gateway:
+      routes:
+        # Auth Service
+        - id: auth-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/auth/**
+        
+        # Owner Service
+        - id: owner-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/owners/**
+        
+        # Pet Service
+        - id: pet-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/pets/**
+        
+        # Alert Service
+        - id: alert-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/alerts/**
+        
+        # AI Service
+        - id: ai-service
+          uri: http://localhost:8000
+          predicates:
+            - Path=/ai/**
+      
+      # Configuración CORS
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+
+# Actuator para health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+# Logging
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    com.petnow.gateway: DEBUG 

@@ -1,0 +1,12 @@
+# Example terraform.tfvars file for PetNow Dogs
+# Copy this file to terraform.tfvars and fill in your values
+
+# Required: Your Google Cloud Project ID
+project_id = "your-project-id-here"
+
+# Optional: Override default region and zone
+region = "us-central1"
+zone   = "us-central1-a"
+
+# Environment (dev, staging, prod)
+environment = "dev" 

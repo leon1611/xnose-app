@@ -1,0 +1,206 @@
+version: '3.8'
+
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: xnose-postgres
+    environment:
+      POSTGRES_DB: xnose_db
+      POSTGRES_USER: xnose_user
+      POSTGRES_PASSWORD: xnose_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U xnose_user -d xnose_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Gateway Service
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    container_name: xnose-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/xnose_db
+      - SPRING_DATASOURCE_USERNAME=xnose_user
+      - SPRING_DATASOURCE_PASSWORD=xnose_password
+      - AUTH_SERVICE_URL=http://auth-service:8081
+      - OWNER_SERVICE_URL=http://owner-service:8082
+      - PET_SERVICE_URL=http://pet-service:8083
+      - ALERT_SERVICE_URL=http://alert-service:8084
+      - AI_SERVICE_URL=http://ai-service:8000
+      - JWT_SECRET=your-jwt-secret-key-here
+      - JWT_EXPIRATION=86400000
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: xnose-auth
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/xnose_db
+      - SPRING_DATASOURCE_USERNAME=xnose_user
+      - SPRING_DATASOURCE_PASSWORD=xnose_password
+      - JWT_SECRET=your-jwt-secret-key-here
+      - JWT_EXPIRATION=86400000
+    ports:
+      - "8081:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Owner Service
+  owner-service:
+    build:
+      context: ./owner-service
+      dockerfile: Dockerfile
+    container_name: xnose-owner
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/xnose_db
+      - SPRING_DATASOURCE_USERNAME=xnose_user
+      - SPRING_DATASOURCE_PASSWORD=xnose_password
+      - JWT_SECRET=your-jwt-secret-key-here
+      - JWT_EXPIRATION=86400000
+    ports:
+      - "8082:8082"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Pet Service
+  pet-service:
+    build:
+      context: ./pet-service
+      dockerfile: Dockerfile
+    container_name: xnose-pet
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/xnose_db
+      - SPRING_DATASOURCE_USERNAME=xnose_user
+      - SPRING_DATASOURCE_PASSWORD=xnose_password
+      - AI_SERVICE_URL=http://ai-service:8000
+      - AI_SERVICE_ENABLED=true
+      - GCS_ENABLED=false
+      - JWT_SECRET=your-jwt-secret-key-here
+      - JWT_EXPIRATION=86400000
+    ports:
+      - "8083:8083"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Alert Service
+  alert-service:
+    build:
+      context: ./alert-service
+      dockerfile: Dockerfile
+    container_name: xnose-alert
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/xnose_db
+      - SPRING_DATASOURCE_USERNAME=xnose_user
+      - SPRING_DATASOURCE_PASSWORD=xnose_password
+      - JWT_SECRET=your-jwt-secret-key-here
+      - JWT_EXPIRATION=86400000
+    ports:
+      - "8084:8084"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # AI Service
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: xnose-ai
+    environment:
+      - PYTHONUNBUFFERED=1
+      - HOST=0.0.0.0
+      - PORT=8000
+      - LOG_LEVEL=INFO
+      - SIMILARITY_THRESHOLD=0.80
+      - CONFIDENCE_BOOST=0.1
+      - EMBEDDINGS_FILE=nose_print_embeddings.json
+      - AUDIT_LOG_FILE=requests.log
+      - GCS_ENABLED=false
+    ports:
+      - "8000:8000"
+    volumes:
+      - ai_embeddings:/app/embeddings
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: xnose-frontend
+    environment:
+      - EXPO_PUBLIC_API_URL=http://localhost:8080
+      - EXPO_PUBLIC_AI_SERVICE_URL=http://localhost:8000
+      - NODE_ENV=production
+    ports:
+      - "80:80"
+    depends_on:
+      gateway-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data:
+  ai_embeddings:
+
+networks:
+  default:
+    name: xnose-network 

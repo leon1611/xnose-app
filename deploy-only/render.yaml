@@ -1,0 +1,132 @@
+services:
+  # Gateway Service
+  - type: web
+    name: xnose-gateway
+    runtime: docker
+    dockerfilePath: ./dockerfiles/gateway-service/Dockerfile
+    dockerContext: ./dockerfiles/gateway-service
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: AUTH_SERVICE_URL
+        value: https://xnose-auth-service.onrender.com
+      - key: OWNER_SERVICE_URL
+        value: https://xnose-owner-service.onrender.com
+      - key: PET_SERVICE_URL
+        value: https://xnose-pet-service.onrender.com
+      - key: ALERT_SERVICE_URL
+        value: https://xnose-alert-service.onrender.com
+      - key: AI_SERVICE_URL
+        value: https://xnose-ai-service.onrender.com
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+
+  # Auth Service
+  - type: web
+    name: xnose-auth-service
+    runtime: docker
+    dockerfilePath: ./dockerfiles/auth-service/Dockerfile
+    dockerContext: ./dockerfiles/auth-service
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+
+  # Owner Service
+  - type: web
+    name: xnose-owner-service
+    runtime: docker
+    dockerfilePath: ./dockerfiles/owner-service/Dockerfile
+    dockerContext: ./dockerfiles/owner-service
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+
+  # Pet Service
+  - type: web
+    name: xnose-pet-service
+    runtime: docker
+    dockerfilePath: ./dockerfiles/pet-service/Dockerfile
+    dockerContext: ./dockerfiles/pet-service
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: GCS_BUCKET_NAME
+        sync: false
+      - key: GOOGLE_CLOUD_PROJECT
+        sync: false
+      - key: AI_SERVICE_URL
+        value: https://xnose-ai-service.onrender.com
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+
+  # Alert Service
+  - type: web
+    name: xnose-alert-service
+    runtime: docker
+    dockerfilePath: ./dockerfiles/alert-service/Dockerfile
+    dockerContext: ./dockerfiles/alert-service
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+
+  # AI Service
+  - type: web
+    name: xnose-ai-service
+    runtime: docker
+    dockerfilePath: ./dockerfiles/ai-service/Dockerfile
+    dockerContext: ./dockerfiles/ai-service
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    healthCheckPath: /health
+    autoDeploy: true
+
+  # Frontend (Static Site)
+  - type: web
+    name: xnose-frontend
+    runtime: docker
+    dockerfilePath: ./dockerfiles/frontend/Dockerfile
+    dockerContext: ./dockerfiles/frontend
+    envVars:
+      - key: EXPO_PUBLIC_API_URL
+        value: https://xnose-gateway.onrender.com
+      - key: EXPO_PUBLIC_AI_SERVICE_URL
+        value: https://xnose-ai-service.onrender.com
+    healthCheckPath: /
+    autoDeploy: true 
