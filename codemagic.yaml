@@ -24,14 +24,11 @@ workflows:
           export PATH=$PATH:$ANDROID_HOME/tools
           export PATH=$PATH:$ANDROID_HOME/tools/bin
           export PATH=$PATH:$ANDROID_HOME/platform-tools
-      - name: Generate keystore
-        script: |
-          cd frontend/android/app
-          keytool -genkey -v -keystore xnose-key.keystore -alias xnose-key -keyalg RSA -keysize 2048 -validity 10000 -storepass xnose123 -keypass xnose123 -dname "CN=XNOSE, OU=Development, O=XNOSE, L=City, S=State, C=US"
-      - name: Build signed APK
+      - name: Generate keystore and build
         script: |
           cd frontend/android
-          ./gradlew assembleRelease -Pandroid.injected.signing.store.file=app/xnose-key.keystore -Pandroid.injected.signing.store.password=xnose123 -Pandroid.injected.signing.key.alias=xnose-key -Pandroid.injected.signing.key.password=xnose123
+          keytool -genkey -v -keystore xnose-key.keystore -alias xnose-key -keyalg RSA -keysize 2048 -validity 10000 -storepass xnose123 -keypass xnose123 -dname "CN=XNOSE, OU=Development, O=XNOSE, L=City, S=State, C=US"
+          ./gradlew assembleRelease -Pandroid.injected.signing.store.file=xnose-key.keystore -Pandroid.injected.signing.store.password=xnose123 -Pandroid.injected.signing.key.alias=xnose-key -Pandroid.injected.signing.key.password=xnose123
     artifacts:
       - frontend/android/app/build/outputs/apk/release/*.apk
     publishing:
