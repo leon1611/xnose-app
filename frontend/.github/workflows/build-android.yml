@@ -1,0 +1,49 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: |
+        npm install
+        npx expo install
+    
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+    
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v2
+    
+    - name: Build APK
+      env:
+        EXPO_PUBLIC_API_URL: "https://xnose-gateway-service-431223568957.us-central1.run.app"
+        EXPO_PUBLIC_AI_SERVICE_URL: "https://xnose-ai-service-jrms6vnyga-uc.a.run.app"
+      run: |
+        npx expo build:android --type apk --non-interactive
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: xnose-app
+        path: |
+          *.apk
+          build/**/outputs/**/*.apk 

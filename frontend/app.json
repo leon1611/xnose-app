@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "X-NOSE",
+    "slug": "xnose",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/xnose-logo.png",
+    "scheme": "xnose",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/xnose-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#20B2AA"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/xnose-logo.png",
+        "backgroundColor": "#20B2AA"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/xnose-logo.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
