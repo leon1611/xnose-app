@@ -27,7 +27,7 @@ jobs:
     - name: Install EAS CLI
       run: |
         cd frontend
-        npm install -g @expo/eas-cli
+        npm install -g eas-cli
     
     - name: Set up Java
       uses: actions/setup-java@v4
