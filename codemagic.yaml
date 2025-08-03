@@ -16,7 +16,7 @@ workflows:
       - name: Install EAS CLI
         script: |
           cd frontend
-          npm install -g @expo/eas-cli
+          npm install -g eas-cli
       - name: Build APK with EAS
         script: |
           cd frontend
