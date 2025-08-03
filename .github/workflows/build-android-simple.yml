@@ -40,7 +40,7 @@ jobs:
         CI: "1"
       run: |
         cd frontend
-        npx react-native run-android --variant=release --no-packager
+        npx react-native run-android --mode=release
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
