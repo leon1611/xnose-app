@@ -13,16 +13,23 @@ workflows:
         script: |
           cd frontend
           npm install
-      - name: Install EAS CLI
+      - name: Set up Java
+        script: |
+          export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+          export PATH=$JAVA_HOME/bin:$PATH
+      - name: Set up Android SDK
+        script: |
+          export ANDROID_HOME=$HOME/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/emulator
+          export PATH=$PATH:$ANDROID_HOME/tools
+          export PATH=$PATH:$ANDROID_HOME/tools/bin
+          export PATH=$PATH:$ANDROID_HOME/platform-tools
+      - name: Build APK with React Native
         script: |
           cd frontend
-          npm install -g eas-cli
-      - name: Build APK with EAS
-        script: |
-          cd frontend
-          npx eas-cli build --platform android --profile preview --non-interactive
+          npx react-native run-android --mode=release
     artifacts:
-      - frontend/build/**/outputs/**/*.apk
+      - frontend/android/app/build/outputs/apk/release/*.apk
     publishing:
       email:
         recipients:
