@@ -24,13 +24,14 @@ workflows:
           export PATH=$PATH:$ANDROID_HOME/tools
           export PATH=$PATH:$ANDROID_HOME/tools/bin
           export PATH=$PATH:$ANDROID_HOME/platform-tools
-      - name: Generate keystore and build
+      - name: Generate keystore and build AAB
         script: |
           cd frontend/android/app
           keytool -genkey -v -keystore xnose-key.keystore -alias xnose-key -keyalg RSA -keysize 2048 -validity 10000 -storepass xnose123 -keypass xnose123 -dname "CN=XNOSE, OU=Development, O=XNOSE, L=City, S=State, C=US"
           cd ..
-          ./gradlew assembleRelease
+          ./gradlew bundleRelease
     artifacts:
+      - frontend/android/app/build/outputs/bundle/release/*.aab
       - frontend/android/app/build/outputs/apk/release/*.apk
     publishing:
       email:
