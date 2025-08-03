@@ -24,10 +24,10 @@ workflows:
           export PATH=$PATH:$ANDROID_HOME/tools
           export PATH=$PATH:$ANDROID_HOME/tools/bin
           export PATH=$PATH:$ANDROID_HOME/platform-tools
-      - name: Build APK with React Native
+      - name: Build APK with Gradle
         script: |
-          cd frontend
-          npx react-native run-android --mode=release
+          cd frontend/android
+          ./gradlew assembleRelease
     artifacts:
       - frontend/android/app/build/outputs/apk/release/*.apk
     publishing:
