@@ -10,33 +10,33 @@ spring:
       routes:
         # Auth Service
         - id: auth-service
-          uri: http://localhost:8081
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
           predicates:
-            - Path=/auth/**
+            - Path=/api/auth/**
         
         # Owner Service
         - id: owner-service
-          uri: http://localhost:8082
+          uri: ${OWNER_SERVICE_URL:http://localhost:8082}
           predicates:
-            - Path=/owners/**
+            - Path=/api/owners/**
         
         # Pet Service
         - id: pet-service
-          uri: http://localhost:8083
+          uri: ${PET_SERVICE_URL:http://localhost:8083}
           predicates:
-            - Path=/pets/**
+            - Path=/api/pets/**
         
         # Alert Service
         - id: alert-service
-          uri: http://localhost:8084
+          uri: ${ALERT_SERVICE_URL:http://localhost:8084}
           predicates:
-            - Path=/alerts/**
+            - Path=/api/alerts/**
         
         # AI Service
         - id: ai-service
-          uri: http://localhost:8000
+          uri: ${AI_SERVICE_URL:http://localhost:8000}
           predicates:
-            - Path=/ai/**
+            - Path=/api/ai/**
       
       # Configuración CORS
       globalcors:

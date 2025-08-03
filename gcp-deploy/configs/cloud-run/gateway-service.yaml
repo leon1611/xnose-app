@@ -1,0 +1,62 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: xnose-gateway-service
+  annotations:
+    run.googleapis.com/ingress: all
+    run.googleapis.com/execution-environment: gen2
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/cpu-throttling: "false"
+        run.googleapis.com/startup-cpu-boost: "true"
+    spec:
+      containerConcurrency: 80
+      timeoutSeconds: 300
+      containers:
+      - image: gcr.io/PROJECT_ID/gateway-service:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "production"
+        - name: SERVER_PORT
+          value: "8080"
+        - name: AUTH_SERVICE_URL
+          value: "https://xnose-auth-service-REGION.a.run.app"
+        - name: OWNER_SERVICE_URL
+          value: "https://xnose-owner-service-REGION.a.run.app"
+        - name: PET_SERVICE_URL
+          value: "https://xnose-pet-service-REGION.a.run.app"
+        - name: ALERT_SERVICE_URL
+          value: "https://xnose-alert-service-REGION.a.run.app"
+        - name: AI_SERVICE_URL
+          value: "https://xnose-ai-service-REGION.a.run.app"
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://DB_HOST:5432/DB_NAME"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "DB_USER"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "DB_PASSWORD"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3 
