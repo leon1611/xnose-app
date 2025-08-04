@@ -25,6 +25,8 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
         headerShown: false,
+        headerStyle: { display: 'none' },
+        headerTitle: '',
         tabBarStyle: {
           display: 'none', // Ocultar completamente la barra de navegación
         },

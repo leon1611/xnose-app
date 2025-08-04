@@ -34,11 +34,7 @@ export default function CustomHeader({ title, showUserInfo = true, onBackPress }
             </TouchableOpacity>
           )}
           <View style={styles.logoContainer}>
-            <Image 
-              source={require('../assets/images/name-preview.png')}
-              style={styles.logoImage}
-              resizeMode="contain"
-            />
+            <Text style={styles.logoText}>X-NOSE</Text>
           </View>
         </View>
 
@@ -79,9 +75,11 @@ const styles = StyleSheet.create({
   logoContainer: {
     marginRight: 8, // Reducido de 10 a 8
   },
-  logoImage: {
-    width: 50, // Reducido de 65 a 50
-    height: 50, // Reducido de 65 a 50
+  logoText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    letterSpacing: 1,
   },
   userSection: {
     alignItems: 'flex-end',
