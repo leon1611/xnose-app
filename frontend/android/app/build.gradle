@@ -103,10 +103,10 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('xnose-key.keystore')
-            storePassword 'xnose123'
-            keyAlias 'xnose-key'
-            keyPassword 'xnose123'
+            storeFile file('xnose-release-key.keystore')
+            storePassword 'xnose2024'
+            keyAlias 'xnose-key-alias'
+            keyPassword 'xnose2024'
         }
     }
     buildTypes {
